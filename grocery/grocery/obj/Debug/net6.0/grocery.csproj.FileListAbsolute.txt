@@ -1,0 +1,15 @@
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\obj\Debug\net6.0\grocery.csproj.AssemblyReference.cache
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\obj\Debug\net6.0\grocery.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\obj\Debug\net6.0\grocery.AssemblyInfoInputs.cache
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\obj\Debug\net6.0\grocery.AssemblyInfo.cs
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\obj\Debug\net6.0\grocery.csproj.CoreCompileInputs.cache
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\bin\Debug\net6.0\grocery.exe
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\bin\Debug\net6.0\grocery.deps.json
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\bin\Debug\net6.0\grocery.runtimeconfig.json
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\bin\Debug\net6.0\grocery.dll
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\bin\Debug\net6.0\ref\grocery.dll
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\bin\Debug\net6.0\grocery.pdb
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\obj\Debug\net6.0\grocery.dll
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\obj\Debug\net6.0\ref\grocery.dll
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\obj\Debug\net6.0\grocery.pdb
+C:\Users\shaul\Revature\ShaulS-P0\grocery\grocery\obj\Debug\net6.0\grocery.genruntimeconfig.cache
