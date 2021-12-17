@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Customer><CustomerId>1</CustomerId><FirstName>shaul</FirstName><LastName>stavi</LastName></Customer><Customer><CustomerId>2</CustomerId><FirstName>orit</FirstName><LastName>stavi</LastName></Customer></ArrayOfCustomer>

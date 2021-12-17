@@ -13,6 +13,8 @@ public class Customer
     public string FirstName { get => firstName; set => firstName = value; }
     public string LastName { get => lastName; set => lastName = value; }
     private static int LastCustomerId;
+    public Customer()
+    { }
     public Customer(string FirstName,string LastName)
 	{
 		this.FirstName = FirstName;
