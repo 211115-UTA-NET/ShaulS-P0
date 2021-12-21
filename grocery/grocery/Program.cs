@@ -6,9 +6,27 @@ using System.Data.SqlClient;
 
 namespace grocery
 {
-    class Program
+    public class Program
     {
 
+        public static String ConsoleReadNameLine(string Caption)
+        {
+            string? NewValue;
+            do
+            {
+                Console.WriteLine(Caption);
+                NewValue = Console.ReadLine();
+                if (NewValue == null || NewValue.Trim()=="")
+                    Console.WriteLine("Empty Value,Try again");
+                if (!IsAllLetters(NewValue))
+                {
+                    Console.WriteLine("Invalid Value,Character must be Letter ,Try again");
+                    NewValue = null;
+                }
+            }
+            while (NewValue == null || NewValue.Trim() == "");
+            return NewValue;
+        }
         public static String ConsoleReadLine(string Caption)
         {
             string? NewValue;
@@ -16,21 +34,147 @@ namespace grocery
             {
                 Console.WriteLine(Caption);
                 NewValue = Console.ReadLine();
-                if (NewValue == null) Console.WriteLine("Empty Value,Try again");
+                if (NewValue == null || NewValue.Trim() == "")
+                    Console.WriteLine("Empty Value,Try again");
             }
-            while (NewValue == null);
+            while (NewValue == null || NewValue.Trim() == "");
             return NewValue;
+        }
+        public static int ConsoleIntegerReadLine(string Caption)
+        {
+            string? NewValue;
+            do
+            {
+                Console.WriteLine(Caption);
+                NewValue = Console.ReadLine();
+                if (NewValue == null || NewValue.Trim() == "") Console.WriteLine("Empty Value,Try again");
+                if (IsInteger(NewValue) == 0)
+                {
+                    Console.WriteLine("Invaild Value,Try again");
+                    NewValue = null;
+                }
+            }
+            while (NewValue == null || NewValue.Trim() == "");
+            return Int32.Parse(NewValue);
+        }
+        public static int IsInteger(string s)
+        {
+            int i;
+            bool result = int.TryParse(s, out i);
+            if (result == true && i > 0)
+                return i;
+            else
+                return 0;
+
+        }
+
+        public static bool IsAllLetters(string s)
+        {
+            foreach (char c in s)
+            {
+                if (!Char.IsLetter(c))
+                    return false;
+            }
+            return true;
+        }
+        public static void InputOrderLine(Order UserOrder)
+        {
+            do
+            {
+                Product FindProduct = null;
+                SearchProduct(ref FindProduct);
+                int Quantity = ConsoleIntegerReadLine("Enter Product Quantity(whole number):");
+                if (Quantity > 0)
+                {
+                    UserOrder.OrdersLines.Add(new(FindProduct, Quantity));
+                }
+            }
+            while (ConsoleReadLine("Add Product to The Order?(y for yes,any Value for no)") == "y");
+
+        }
+        public static void SearchProduct(ref Product FindProduct)
+        {
+            bool Result = false;
+            {
+                FindProduct = new Product();
+                FindProduct.ProductName = ConsoleReadLine("enter product Name:");
+                Result = FindProduct.SearchProductByName();
+                if (Result)
+                    Console.WriteLine("product Exists");
+                else
+                    Console.WriteLine("product Not Found");
+            }
+            while (Result == false) ;
+
+        }
+        public static bool SearchCustomer(ref Customer FindCustomer)
+        {
+            bool Result = false;
+            //{
+            FindCustomer = new Customer();
+            FindCustomer.FirstName = ConsoleReadNameLine("enter Customer first Name:");
+            FindCustomer.LastName = ConsoleReadNameLine("enter Customer Last Name:");
+            Result = FindCustomer.SearchCustomersByName();
+            if (Result)
+                Console.WriteLine("Customer Exists");
+            else
+                Console.WriteLine("Customer Not Found");
+            return Result;
+        }
+
+        public static void AddNewOrderWithValidation(Order CurrOrder)
+        {
+            string summuryErr = "";
+            if (CurrOrder.AddNewOrder(ref summuryErr) == true)
+                Console.WriteLine("New Order Added " + CurrOrder.OrderID);
+            else
+            {
+                Console.WriteLine(summuryErr);
+            }
         }
         public static void Main(string[] args)
         {
-
-            string connectionString = File.ReadAllText("C:/Users/shaul/Revature/db.txt");
-            IRepository repository = new SqlRepository(connectionString);
-
-            string? InputString = "";
-            do
+            try
             {
-                Console.WriteLine(
+                string connectionString = File.ReadAllText("C:/Users/shaul/Revature/db.txt");
+                IRepository repository = new SqlRepository(connectionString);
+                Customer.Repository = repository;
+                Product.Repository = repository;
+                Stores.Repository = repository;
+                Order.Repository = repository;
+                Stores CenterGrocery = new("Center Grocery");
+                CenterGrocery.SearchStoreByName();
+
+                Product Milk = new("Milk");
+                Milk.SearchProductByName();
+                Product Bread = new("Bread");
+                Bread.SearchProductByName();
+                Product Candy = new("Candy");
+                Candy.SearchProductByName();
+
+                Customer Customer1 = new Customer("Shaul", "Stavi");
+                if (Customer1.SearchCustomersByName() == false) Customer1.AddNewCustomer();
+
+                Order Order1 = new(Customer1, CenterGrocery, new DateTime(2021, 12, 10));
+                Order1.OrdersLines = new List<OrderLines> { new(Milk, 3), new(Bread, 2) };
+                AddNewOrderWithValidation(Order1);
+
+                Order Order2 = new(Customer1, CenterGrocery, new DateTime(2021, 12, 11));
+                Order2.OrdersLines = new List<OrderLines> { new(Candy, 3), new(Milk, 2) };
+                AddNewOrderWithValidation(Order2);
+
+
+                Customer Customer2 = new Customer("Orit", "Stavi Rif");
+                if (Customer2.SearchCustomersByName() == false) Customer2.AddNewCustomer();
+
+                Order Order3 = new(Customer2, CenterGrocery, new DateTime(2021, 12, 11));
+                Order3.OrdersLines = new List<OrderLines> { new(Bread, 3), new(Milk, 2), new(Milk, 1) };
+                AddNewOrderWithValidation(Order3);
+                Customer FindCustomer;
+                string? InputString = "";
+                do
+                {
+                    Console.WriteLine(
 @"1. place orders to store locations for customers
 2. add a new customer
 3. search customers by name
@@ -38,101 +182,70 @@ namespace grocery
 5. display all order history of a store location
 6. display all order history of a customer
 7. Exit");
-                InputString = Console.ReadLine();
-                if (InputString != "7")
-                {
-                    switch (InputString) {
-                        case "3":
-                            Customer FindCustomer;
-                            bool Result = false;
-                            {
-                                FindCustomer = new Customer();
+                    InputString = Console.ReadLine();
+                    if (InputString != "7")
+                    {
+                        switch (InputString)
+                        {
+                            case "1":
+                                Console.WriteLine(Stores.DisplayStoreList());
+                                int StroeId = ConsoleIntegerReadLine("Enter Store ID: ");
+                                Stores UserStore = new Stores(StroeId);
                                 Console.WriteLine("Search Customer:");
-                                FindCustomer.FirstName = ConsoleReadLine("enter Customer first Name:");
-                                FindCustomer.LastName = ConsoleReadLine("enter Customer Last Name:");
-                                Result=repository.SearchCustomersByName(FindCustomer);
-                                if (Result)
-                                    Console.WriteLine("Customer Exists");                                
+                                FindCustomer = new Customer();
+                                if (SearchCustomer(ref FindCustomer))
+                                {
+                                    Console.WriteLine(FindCustomer.CustomerId);
+                                    Order OrderUser = new Order(FindCustomer, UserStore);
+                                    InputOrderLine(OrderUser);
+                                    AddNewOrderWithValidation(OrderUser);
+                                }
+                                break;
+                            case "2":
+                                Customer NewCustomer = new Customer();
+                                NewCustomer.FirstName = ConsoleReadNameLine("enter Customer first Name:");
+                                NewCustomer.LastName = ConsoleReadNameLine("enter Customer Last Name:");
+                                if (NewCustomer.SearchCustomersByName() == false)
+                                    NewCustomer.AddNewCustomer();
                                 else
-                                    Console.WriteLine("Customer Not Found");
-                            }
-                            while (Result == false) ;
-                            break;
-                        case "2":
-                            Customer NewCustomer = new Customer();
-                            NewCustomer.FirstName = ConsoleReadLine("enter Customer first Name:");
-                            NewCustomer.LastName = ConsoleReadLine("enter Customer Last Name:");
-                            repository.AddNewCustomer (NewCustomer);
-                            break;
+                                    Console.WriteLine("Customer Already Exists");
+                                break;
+
+                            case "3":
+                                Console.WriteLine("Search Customer:");
+                                FindCustomer = new Customer();
+                                SearchCustomer(ref FindCustomer);
+                                break;
+                            case "4":
+                                int OrderId = ConsoleIntegerReadLine("Enter Order Number:");
+                                Order FindOrder = Order.SearchOrderById(OrderId);
+                                Console.Write(FindOrder.DisplayDetailsOrder());
+                                break;
+                            case "5":
+                                Console.WriteLine(Stores.DisplayStoreList());
+                                int StroeId2 = ConsoleIntegerReadLine("Enter Store ID: ");
+                                Stores UserStore2 = new Stores(StroeId2);
+                                Console.Write(UserStore2.orderHistoryByStore());
+                                break;
+                            case "6":
+                                Console.WriteLine("Search Customer:");
+                                FindCustomer = new Customer(); ;
+                                SearchCustomer(ref FindCustomer);
+                                Console.Write(FindCustomer.orderHistoryByCustomer());
+                                break;
+                            default:
+                                Console.WriteLine("Not a Vaild Line Menu Number");
+                                break;
+                        }
                     }
+
                 }
-
+                while (InputString != "7");
             }
-            while (InputString != "7");
-
-
-
-            // a connection string is a somewhat standardized format to represent all credentials and options
-            // needed to open a connection to some remote data source. (in the case of SQL, it will definitely
-            // have a server URL, user, password, and database name at least)
-            // to build from scratch, look at: either the ADO.NET documentation on SQL Server,
-            // or the SQL Server documentation on ADO.NET, or... https://www.connectionstrings.com/
-
-            // let's NOT put our connection strings on github
-            //string connectionString = File.ReadAllText("C:/Users/shaul/Revature/db.txt");
-            //// instead... some reasonable possibilities: command-line args, environment variables
-            //// easier for now - either a gitignored file in the project directory
-            //// or a file somewhere outside the git repo entirely
-
-            //using SqlConnection connection = new(connectionString);
-            //connection.Open();
-
-            //string commandText = "SELECT * FROM Customer;";
-
-            //using SqlCommand command = new(commandText, connection);
-
-            //using SqlDataReader reader = command.ExecuteReader();
-
-            //while (reader.Read())
-            //{
-            //    // goes through each row at a time
-
-            //    // several ways to get the data in the current row (by column index)
-            //    int id = reader.GetInt32(0);
-            //    string FirstName = reader.GetString(1);
-            //    //string title2 = reader["Title"].ToString();
-            //    //int pages = int.Parse(reader[2].ToString());
-            //    string LastName= reader.GetString(2);
-
-            //    Console.WriteLine($"id:{id} Full Name:{FirstName} {LastName}");
-            //}
-
-            //List<Customer>? Customers= new List<Customer>();             
-            
-            //Customer c1 = new Customer("shaul", "stavi");
-            //Customer c2 = new Customer("orit", "stavi");
-            //Customers.Add(c1);
-            //Customers.Add(c2);
-
-            //XmlSerializer serializer = new XmlSerializer(Customers.GetType());
-            //try
-            //{
-            //    using (StreamWriter sw = new StreamWriter("Customers.xml"))
-            //    {
-            //        serializer.Serialize(sw, Customers);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);                
-            //}
-
-            //stream = new FileStream(@"E:\ExampleNew.txt", FileMode.Open, FileAccess.Read);
-            //Tutorial objnew = (Tutorial)formatter.Deserialize(stream);
-
-            //Console.WriteLine(objnew.ID);
-            //Console.WriteLine(objnew.Name);
-
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
         }
     }

@@ -6,23 +6,30 @@ using System.Threading.Tasks;
 
 namespace grocery
 {
-    class Product
+    public class Product
     {
         int productId;
-        int productName;
-        int productPrice;
-        static int LastProductPrice;
-        public Product(int productName, int productPrice)
+        string productName;
+        double productPrice;
+        public Product()
         {
-            LastProductPrice++;
-            this.productId = LastProductPrice;
+        }
+        public Product(string productName)
+        {
             this.productName = productName;
-            this.productPrice = productPrice;
         }
 
         public int ProductId { get => productId; set => productId = value; }
-        public int ProductName { get => productName; set => productName = value; }
-        public int ProductPrice { get => productPrice; set => productPrice = value; }
+        public string ProductName { get => productName; set => productName = value; }
+        public double ProductPrice { get => productPrice; set => productPrice = value; }
+        private static IRepository? _repository;
+        public static IRepository? Repository { get => _repository; set => _repository = value; }
+
+        public bool SearchProductByName()
+        {
+            return _repository is null ? false : _repository.SearchProductByName(this);
+        }
+
     }
 
 }

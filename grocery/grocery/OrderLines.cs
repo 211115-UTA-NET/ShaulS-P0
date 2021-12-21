@@ -6,19 +6,27 @@ using System.Threading.Tasks;
 
 namespace grocery
 {
-     class OrderLines
+    public class OrderLines
     {
         Product orderProduct;
-        int orderPrice;
+        double orderPrice;
         int quantity;
         public OrderLines(Product orderProduct, int quantity)
         {
-            this.orderProduct = orderProduct;            
+            this.orderProduct = orderProduct;
             this.quantity = quantity;
             this.orderPrice = orderProduct.ProductPrice;
         }
+        public OrderLines(Product orderProduct, int quantity, double orderPrice)
+        {
+            this.orderProduct = orderProduct;
+            this.quantity = quantity;
+            this.orderPrice = orderPrice;
+        }
 
-        public int OrderPrice { get => orderPrice; set => orderPrice = value; }
+
+        public double OrderPrice { get => orderPrice; set => orderPrice = value; }
         public int Quantity { get => quantity; set => quantity = value; }
+        public Product OrderProduct { get => orderProduct; set => orderProduct = value; }
     }
 }

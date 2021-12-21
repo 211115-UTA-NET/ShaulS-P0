@@ -15,7 +15,12 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Miscellaneous Files",
       "ColorIndex": -1
+    },
+    "be096f94-38ca-44e4-81f1-1c1d0113960a": {
+      "ProjectGuid": "be096f94-38ca-44e4-81f1-1c1d0113960a",
+      "DisplayName": "groceryTest",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }

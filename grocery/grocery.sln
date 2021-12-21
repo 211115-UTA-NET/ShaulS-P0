@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "grocery", "grocery\grocery.csproj", "{5049827E-EE99-45FE-A804-DED7C0852FBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "grocery", "grocery\grocery.csproj", "{5049827E-EE99-45FE-A804-DED7C0852FBD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ED4F847A-1A34-44B3-9583-C6D0701B4082}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "groceryTest", "..\groceryTest\groceryTest.csproj", "{BE096F94-38CA-44E4-81F1-1C1D0113960A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{5049827E-EE99-45FE-A804-DED7C0852FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5049827E-EE99-45FE-A804-DED7C0852FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5049827E-EE99-45FE-A804-DED7C0852FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE096F94-38CA-44E4-81F1-1C1D0113960A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE096F94-38CA-44E4-81F1-1C1D0113960A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE096F94-38CA-44E4-81F1-1C1D0113960A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE096F94-38CA-44E4-81F1-1C1D0113960A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
