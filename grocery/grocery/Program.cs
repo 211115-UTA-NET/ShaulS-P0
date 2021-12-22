@@ -112,6 +112,7 @@ namespace grocery
         public static void SearchProduct(ref Product FindProduct)
         {
             bool Result = false;
+            do
             {
                 FindProduct = new Product();
                 FindProduct.ProductName = ConsoleReadLine("enter product Name:");
@@ -121,7 +122,7 @@ namespace grocery
                 else
                     Console.WriteLine("product Not Found");
             }
-            while (Result == false) ;
+            while (Result == false);
 
         }
         public static bool SearchCustomer(ref Customer FindCustomer)
