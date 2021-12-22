@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace grocery
 {
+    /// <summary>
+    /// Stores Record Update and insert data from Database
+    /// </summary>
     public class Stores
     {
         string locationName;
@@ -46,7 +49,7 @@ namespace grocery
             summary.AppendLine("---------------------------------------------------------------");
             foreach (var record in allRecords)
             {
-                summary.AppendLine($"{record.OrderID}\t\t{record.Customer.FirstName} {record.Customer.LastName}\t{record.Total}\t{record.Ordertime}");
+                summary.AppendLine($"{record.OrderID}\t\t{record.Customer.FirstName} {record.Customer.LastName}\t${record.Total}\t{record.Ordertime}");
             }
             summary.AppendLine("---------------------------------------------------------------");
 

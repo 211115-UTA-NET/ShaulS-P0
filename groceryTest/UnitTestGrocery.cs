@@ -5,7 +5,7 @@ using System;
 
 namespace groceryTest
 {
-    public class UnitTest1
+    public class UnitTestGrocery
     {
 
         [Fact]
@@ -53,7 +53,7 @@ namespace groceryTest
             var result = orderTest.DisplayDetailsOrder();
             //var a = false;
             // ASSERT (checking that the behavior was as expected)
-            var expected = "Order Date\t01/01/2021 00:00:00\t\tCustomer Name\t \t\tAmount\r\nProduct\t\t\tQuantity\t\tPrice\t\tAmount\r\n---------------------------------------------------------------\r\n---------------------------------------------------------------\r\nOrder Total\t0\r\n";
+            var expected = "Store Name:\r\nOrder Date:01/01/2021 00:00:00\t\tCustomer Name:  \t\t\r\nProduct\t\tQuantity\t\tPrice\tAmount\r\n---------------------------------------------------------------\r\n---------------------------------------------------------------\r\nOrder Total\t$0 \r\n";
             Assert.Equal(expected: expected, actual: result);
 
 

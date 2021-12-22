@@ -4,6 +4,9 @@ using System.Text;
 namespace grocery
 {
 
+    /// <summary>
+    /// Customer Record Update and insert data from Database
+    /// </summary>
     public class Customer
     {
 
@@ -26,7 +29,9 @@ namespace grocery
             this.FirstName = FirstName;
             this.LastName = LastName;
         }
-
+        /// <summary>
+        /// Add New Customer Record To The Database 
+        /// </summary>
         public void AddNewCustomer()
         {
             if (_repository is not null) _repository.AddNewCustomer(this);
@@ -35,6 +40,10 @@ namespace grocery
         {
             return _repository is null ? false : _repository.SearchCustomersByName(this);
         }
+        /// <summary>
+        /// display all order history of a customer
+        /// </summary>
+
         public string orderHistoryByCustomer()
         {
             IEnumerable<Order>? allRecords = null;
@@ -45,7 +54,7 @@ namespace grocery
             summary.AppendLine("---------------------------------------------------------------");
             foreach (var record in allRecords)
             {
-                summary.AppendLine($"{record.OrderID}\t\t{record.Store.LocationName} \t{record.Total}\t{record.Ordertime}");
+                summary.AppendLine($"{record.OrderID}\t\t{record.Store.LocationName} \t${record.Total}\t{record.Ordertime}");
             }
             summary.AppendLine("---------------------------------------------------------------");
 

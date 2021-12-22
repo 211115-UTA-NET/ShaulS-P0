@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace grocery
 {
+    /// <summary>
+    /// Order Line Record Update and insert data from Database
+    /// </summary>
     public class OrderLines
     {
         Product orderProduct;

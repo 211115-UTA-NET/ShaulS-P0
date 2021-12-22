@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace grocery
 {
+    /// <summary>
+    /// Product Record Update and insert data from Database
+    /// </summary>
     public class Product
     {
         int productId;
@@ -24,6 +27,9 @@ namespace grocery
         public double ProductPrice { get => productPrice; set => productPrice = value; }
         private static IRepository? _repository;
         public static IRepository? Repository { get => _repository; set => _repository = value; }
+        /// <summary>
+        /// Search Product By Name
+        /// </summary>
 
         public bool SearchProductByName()
         {

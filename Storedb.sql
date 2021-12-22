@@ -1,13 +1,13 @@
-drop table StoreOrderItem
-drop table Inventory
-drop table Product
-drop table StoreOrder
-drop table Customer
-drop table StoreLocation
-drop procedure UpdateInventory
-go
-drop view vStoreOrderItem
-go
+--drop table StoreOrderItem
+--drop table Inventory
+--drop table Product
+--drop table StoreOrder
+--drop table Customer
+--drop table StoreLocation
+--drop procedure UpdateInventory
+--go
+--drop view vStoreOrderItem
+--go
 CREATE TABLE Customer
 (
 	CustomerID int Identity (1,1) Primary key,
@@ -67,19 +67,29 @@ create Procedure UpdateInventory(@OrderID INT,@ret nvarchar(100) out)
 as
 begin	  
 	set @ret ='not sufficient inventory '
-	select  @ret='in Product:' +Product.ProductName  from Inventory inner join StoreOrder on Inventory.LocationId = StoreOrder.LocationId 
+	declare @ProductNotInInventory nvarchar(100)
+	if exists(	select   Product.ProductName  from Inventory inner join StoreOrder on Inventory.LocationId = StoreOrder.LocationId 
 							inner join vStoreOrderItem on Inventory.ProductID=vStoreOrderItem.ProductID
 							inner join Product on Product.ProductID=vStoreOrderItem.ProductID
 							where StoreOrder.OrderID=@OrderID and Inventory.Quantity -vStoreOrderItem.Quantity<0
-	--if exists(select )
-	BEGIN TRAN
-	update Inventory set Quantity=Inventory.Quantity -vStoreOrderItem.Quantity from Inventory inner join StoreOrder on Inventory.LocationId = StoreOrder.LocationId 
-							inner join vStoreOrderItem on Inventory.ProductID=vStoreOrderItem.ProductID
-							where StoreOrder.OrderID=@OrderID 
-									
-	update StoreOrder set IsApproved=1 where OrderID=@OrderID 
-	COMMIT TRAN 
-	set @ret= '1'
+		)
+	begin 
+		select  top 1 @ProductNotInInventory='in Product: ' + Product.ProductName  from Inventory inner join StoreOrder on Inventory.LocationId = StoreOrder.LocationId 
+								inner join vStoreOrderItem on Inventory.ProductID=vStoreOrderItem.ProductID
+								inner join Product on Product.ProductID=vStoreOrderItem.ProductID
+								where StoreOrder.OrderID=@OrderID and Inventory.Quantity -vStoreOrderItem.Quantity<0
+		set @ret=@ret+@ProductNotInInventory
+	end
+	else
+	begin
+		BEGIN TRAN
+		update Inventory set Quantity=Inventory.Quantity -vStoreOrderItem.Quantity from Inventory inner join StoreOrder on Inventory.LocationId = StoreOrder.LocationId 
+								inner join vStoreOrderItem on Inventory.ProductID=vStoreOrderItem.ProductID
+								where StoreOrder.OrderID=@OrderID 		 
+		update StoreOrder set IsApproved=1 where OrderID=@OrderID 
+		COMMIT TRAN 	
+		set @ret= '1'
+	end
 end
 go
 insert into StoreLocation (LocationName) Values
@@ -94,7 +104,6 @@ insert into Product (ProductName,DefaultPrice) values
 	('Candy',5),
 	('Cola Can',2)
 
-delete Inventory
 
 insert Inventory (ProductID,LocationId,Quantity)
 select ProductID,(select LocationId from StoreLocation where StoreLocation.LocationName='North Grocery'),200 from Product
@@ -108,13 +117,3 @@ select ProductID,(select LocationId from StoreLocation where StoreLocation.Locat
 
 
 
-
-SELECT StoreOrder.*,StoreOrderItem.*,StoreLocation.*,Product.ProductName
-                  FROM dbo.StoreOrder inner join dbo.StoreOrderItem on StoreOrder.OrderID=StoreOrderItem.OrderID
-                                 inner join dbo.StoreLocation on StoreLocation.LocationId=StoreOrder.LocationId
-                                 inner join dbo.Product on Product.ProductID=StoreOrderItem.ProductID
-                  
-				  WHERE StoreOrder.OrderId =4
-
-delete storeorder
-select * from customer

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace grocery
 {
+/// <summary>
+/// methods for connecting and getting data from and to the database
+/// </summary>
     class SqlRepository : IRepository
     {
 

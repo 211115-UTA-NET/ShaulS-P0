@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace grocery
 {
+    /// <summary>
+    /// Order Record Update and insert data from Database
+    /// </summary>
     public class Order
     {
         string storeLocation;
@@ -18,11 +21,16 @@ namespace grocery
         private Stores store;
         private static IRepository? _repository;
         public static IRepository? Repository { get => _repository; set => _repository = value; }
+        /// <summary>
+        /// Search Order By Id returns Order Object
+        /// </summary>
         public static Order SearchOrderById(int OrderId)
         {
             return _repository is null ? null : _repository.SearchOrderById(OrderId);
         }
-
+        /// <summary>
+        /// Check Order Valid Quantity returns the error Message in strSummary
+        /// </summary>
         public bool CheckOrderValidQuantity(ref string strSummary)
         {
             bool result = true;
@@ -43,6 +51,9 @@ namespace grocery
             }
             return result;
         }
+        /// <summary>
+        /// Add New Order with Validity check
+        /// </summary>
         public bool AddNewOrder(ref string strSummary)
         {
             bool result = false;
@@ -52,18 +63,23 @@ namespace grocery
             else
                 return false;
         }
+        /// <summary>
+        /// Display Details Order
+        /// </summary>
+
         public string DisplayDetailsOrder()
         {
             var summary = new StringBuilder();
-            summary.AppendLine($"Order Date\t{this.Ordertime}\t\tCustomer Name\t{this.customer.FirstName} {this.customer.LastName}\t\tAmount");
-            summary.AppendLine($"Product\t\t\tQuantity\t\tPrice\t\tAmount");
+            summary.AppendLine($"Store Name:{this.Store.LocationName}");
+            summary.AppendLine($"Order Date:{this.Ordertime}\t\tCustomer Name: {this.customer.FirstName} {this.customer.LastName}\t\t");
+            summary.AppendLine($"Product\t\tQuantity\t\tPrice\tAmount");
             summary.AppendLine("---------------------------------------------------------------");
             foreach (var record in this.OrdersLines)
             {
-                summary.AppendLine($"{record.OrderProduct.ProductName }\t{record.Quantity}\t\t{record.OrderPrice}\t\t{record.Quantity * record.OrderPrice }");
+                summary.AppendLine($"{record.OrderProduct.ProductName }\t\t{record.Quantity}\t\t\t${record.OrderPrice}\t${record.Quantity * record.OrderPrice }");
             }
             summary.AppendLine("---------------------------------------------------------------");
-            summary.AppendLine($"Order Total\t{this.Total}");
+            summary.AppendLine($"Order Total\t${this.Total} ");
             return summary.ToString();
 
         }

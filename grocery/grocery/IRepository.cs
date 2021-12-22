@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace grocery
 {
-
+    /// <summary>
+    /// Use Interface to sperate sql operations from Method done in Local Program
+    /// </summary>
     public interface IRepository
     {
-        //        IEnumerable<Round> GetAllRoundsOfPlayer(string name);
-        //        void AddNewRound(string? player1, string? player2, Round round);
         void AddNewCustomer(Customer NewCustomer);
         bool SearchCustomersByName(Customer NewCustomer);
 

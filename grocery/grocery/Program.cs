@@ -8,7 +8,9 @@ namespace grocery
 {
     public class Program
     {
-
+        /// <summary>
+        /// Console read input as a string with letters only
+        /// </summary>
         public static String ConsoleReadNameLine(string Caption)
         {
             string? NewValue;
@@ -27,6 +29,9 @@ namespace grocery
             while (NewValue == null || NewValue.Trim() == "");
             return NewValue;
         }
+        /// <summary>
+        /// Console Read Line a string
+        /// </summary>
         public static String ConsoleReadLine(string Caption)
         {
             string? NewValue;
@@ -40,6 +45,9 @@ namespace grocery
             while (NewValue == null || NewValue.Trim() == "");
             return NewValue;
         }
+        /// <summary>
+        /// Console read Line a whole number
+        /// </summary>
         public static int ConsoleIntegerReadLine(string Caption)
         {
             string? NewValue;
@@ -57,6 +65,9 @@ namespace grocery
             while (NewValue == null || NewValue.Trim() == "");
             return Int32.Parse(NewValue);
         }
+        /// <summary>
+        /// test if string is an integer
+        /// </summary>
         public static int IsInteger(string s)
         {
             int i;
@@ -67,7 +78,7 @@ namespace grocery
                 return 0;
 
         }
-
+        // test string if it has only letters
         public static bool IsAllLetters(string s)
         {
             foreach (char c in s)
@@ -77,6 +88,9 @@ namespace grocery
             }
             return true;
         }
+        /// <summary>
+        /// Console Read Order Line
+        /// </summary>
         public static void InputOrderLine(Order UserOrder)
         {
             do
@@ -92,6 +106,9 @@ namespace grocery
             while (ConsoleReadLine("Add Product to The Order?(y for yes,any Value for no)") == "y");
 
         }
+        /// <summary>
+        /// Search Product
+        /// </summary>
         public static void SearchProduct(ref Product FindProduct)
         {
             bool Result = false;
@@ -152,7 +169,7 @@ namespace grocery
                 Product Candy = new("Candy");
                 Candy.SearchProductByName();
 
-                Customer Customer1 = new Customer("Shaul", "Stavi");
+                Customer Customer1 = new Customer("Yarden", "Stavi");
                 if (Customer1.SearchCustomersByName() == false) Customer1.AddNewCustomer();
 
                 Order Order1 = new(Customer1, CenterGrocery, new DateTime(2021, 12, 10));
@@ -175,7 +192,10 @@ namespace grocery
                 do
                 {
                     Console.WriteLine(
-@"1. place orders to store locations for customers
+@"
+        store Menu
+        ----------
+1. place orders to store locations for customers
 2. add a new customer
 3. search customers by name
 4. display details of an order
